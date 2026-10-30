@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.devquest.data.RepositoryTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-29T09:25:46.138Z" hostname="RACs-MacBook-Pro.local" time="5.341">
+  <properties/>
+  <testcase name="seedIsIdempotentAndContentComplete" classname="com.devquest.data.RepositoryTest" time="4.867"/>
+  <testcase name="concurrentCompletionRewardsOnlyOnceAndFlowsUpdate" classname="com.devquest.data.RepositoryTest" time="0.131"/>
+  <testcase name="preferencesPersistAcrossRepositoryInstances" classname="com.devquest.data.RepositoryTest" time="0.085"/>
+  <testcase name="correctAnswerRewardSurvivesRepositoryRecreation" classname="com.devquest.data.RepositoryTest" time="0.059"/>
+  <testcase name="flowInvalidatesAfterCommit" classname="com.devquest.data.RepositoryTest" time="0.046"/>
+  <testcase name="bookmarksDraftsInterviewsAndReset" classname="com.devquest.data.RepositoryTest" time="0.064"/>
+  <testcase name="firstWrongAttemptNeverEarnsRetryXp" classname="com.devquest.data.RepositoryTest" time="0.056"/>
+  <testcase name="studyLedgerIsIdempotent" classname="com.devquest.data.RepositoryTest" time="0.031"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

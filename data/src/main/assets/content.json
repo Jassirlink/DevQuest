@@ -1,0 +1,1319 @@
+{
+  "version": 1,
+  "paths": [
+    {
+      "id": "android",
+      "title": "Android Fundamentals",
+      "description": "Lifecycle, navigation and resilient UI",
+      "tags": [
+        "lifecycle",
+        "navigation and resilient ui"
+      ]
+    },
+    {
+      "id": "kotlin",
+      "title": "Kotlin Fundamentals and Advanced Kotlin",
+      "description": "Expressive types, collections and safe APIs",
+      "tags": [
+        "expressive types",
+        "collections and safe apis"
+      ]
+    },
+    {
+      "id": "coroutines",
+      "title": "Coroutines and Flow",
+      "description": "Structured concurrency and observable data",
+      "tags": [
+        "structured concurrency and observable data"
+      ]
+    },
+    {
+      "id": "compose",
+      "title": "Jetpack Compose",
+      "description": "State-driven interfaces and efficient rendering",
+      "tags": [
+        "state-driven interfaces and efficient rendering"
+      ]
+    },
+    {
+      "id": "architecture",
+      "title": "MVVM and Clean Architecture",
+      "description": "Boundaries that make change safer",
+      "tags": [
+        "boundaries that make change safer"
+      ]
+    },
+    {
+      "id": "network",
+      "title": "Networking and Dependency Injection",
+      "description": "Reliable transport and explicit dependencies",
+      "tags": [
+        "reliable transport and explicit dependencies"
+      ]
+    },
+    {
+      "id": "offline",
+      "title": "Room, WorkManager and Offline Data",
+      "description": "A durable local source of truth",
+      "tags": [
+        "a durable local source of truth"
+      ]
+    },
+    {
+      "id": "testing",
+      "title": "Testing and Debugging",
+      "description": "Fast feedback and trustworthy assertions",
+      "tags": [
+        "fast feedback and trustworthy assertions"
+      ]
+    },
+    {
+      "id": "performance",
+      "title": "Android Performance",
+      "description": "Measure, explain and improve",
+      "tags": [
+        "measure",
+        "explain and improve"
+      ]
+    },
+    {
+      "id": "system",
+      "title": "Android System Design",
+      "description": "Design for failures and growth",
+      "tags": [
+        "design for failures and growth"
+      ]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "android-foundations",
+      "pathId": "android",
+      "title": "Core concepts",
+      "order": 0
+    },
+    {
+      "id": "kotlin-foundations",
+      "pathId": "kotlin",
+      "title": "Core concepts",
+      "order": 1
+    },
+    {
+      "id": "coroutines-foundations",
+      "pathId": "coroutines",
+      "title": "Core concepts",
+      "order": 2
+    },
+    {
+      "id": "compose-foundations",
+      "pathId": "compose",
+      "title": "Core concepts",
+      "order": 3
+    },
+    {
+      "id": "architecture-foundations",
+      "pathId": "architecture",
+      "title": "Core concepts",
+      "order": 4
+    },
+    {
+      "id": "network-foundations",
+      "pathId": "network",
+      "title": "Core concepts",
+      "order": 5
+    },
+    {
+      "id": "offline-foundations",
+      "pathId": "offline",
+      "title": "Core concepts",
+      "order": 6
+    },
+    {
+      "id": "testing-foundations",
+      "pathId": "testing",
+      "title": "Core concepts",
+      "order": 7
+    },
+    {
+      "id": "performance-foundations",
+      "pathId": "performance",
+      "title": "Core concepts",
+      "order": 8
+    },
+    {
+      "id": "system-foundations",
+      "pathId": "system",
+      "title": "Core concepts",
+      "order": 9
+    }
+  ],
+  "lessons": [
+    {
+      "id": "lesson-1",
+      "chapterId": "android-foundations",
+      "title": "Activity lifecycle",
+      "minutes": 4,
+      "order": 0,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "An Activity is a window into your app, not durable storage. Rotation can destroy and recreate it. Keep business state in a ViewModel, small restoration keys in SavedStateHandle, and durable data in Room. onStop does not mean the user has finished a task."
+        },
+        {
+          "kind": "code",
+          "text": "override fun onCreate(state: Bundle?) {\n    super.onCreate(state)\n    setContent { QuestApp() }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Rotate a screen after selecting a lesson. Which state belongs in Room and which belongs in SavedStateHandle?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-2",
+      "chapterId": "android-foundations",
+      "title": "Lifecycle-aware collection",
+      "minutes": 5,
+      "order": 1,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "A hot Flow may continue producing values when a screen is backgrounded. collectAsStateWithLifecycle only collects while the lifecycle is active. This reduces unnecessary work; the repository still owns the durable source of truth."
+        },
+        {
+          "kind": "code",
+          "text": "val state by viewModel.state\n    .collectAsStateWithLifecycle()\nText(state.title)"
+        },
+        {
+          "kind": "exercise",
+          "text": "Explain why collecting in an unmanaged application scope can waste resources."
+        }
+      ]
+    },
+    {
+      "id": "lesson-3",
+      "chapterId": "kotlin-foundations",
+      "title": "Null safety as an API",
+      "minutes": 6,
+      "order": 2,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Nullable types force callers to handle absence. A safe call returns null when the receiver is null; Elvis supplies a default. Avoid !! at data boundaries because it turns malformed input into a crash."
+        },
+        {
+          "kind": "code",
+          "text": "fun initials(name: String?): String =\n    name?.trim()?.takeIf { it.isNotEmpty() }\n        ?.take(2)?.uppercase() ?: \"DQ\""
+        },
+        {
+          "kind": "exercise",
+          "text": "Test null, an empty string and a two-word name. Why is blank different from null?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-4",
+      "chapterId": "kotlin-foundations",
+      "title": "Sealed outcomes",
+      "minutes": 7,
+      "order": 3,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "A sealed hierarchy models a finite set of outcomes. Exhaustive when expressions make missing cases visible at compile time. Prefer explicit loading and failure cases over several booleans that permit contradictory combinations."
+        },
+        {
+          "kind": "code",
+          "text": "sealed interface LoadResult {\n    data class Ready(val title: String): LoadResult\n    data class Failed(val cause: String): LoadResult\n    data object Loading: LoadResult\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Add a cached-data case and list the call sites that must respond."
+        }
+      ]
+    },
+    {
+      "id": "lesson-5",
+      "chapterId": "kotlin-foundations",
+      "title": "Collections and immutability",
+      "minutes": 4,
+      "order": 4,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "List is a read-only interface, not proof that the backing object is immutable. Do not mutate a collection after exposing it as UI state. Create a new list and a new state value so equality and change detection remain predictable."
+        },
+        {
+          "kind": "code",
+          "text": "data class State(val names: List<String>)\nval updated = old.copy(names = old.names + \"Ada\")"
+        },
+        {
+          "kind": "exercise",
+          "text": "Show how retaining a MutableList reference could change an already-published state."
+        }
+      ]
+    },
+    {
+      "id": "lesson-6",
+      "chapterId": "kotlin-foundations",
+      "title": "Inline reified types",
+      "minutes": 5,
+      "order": 5,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Generic type arguments are usually erased at runtime. An inline function with a reified parameter can inspect that type at the call site. Use this for small type-aware helpers, not as a substitute for clear domain contracts."
+        },
+        {
+          "kind": "code",
+          "text": "inline fun <reified T> List<*>.only(): List<T> =\n    filterIsInstance<T>()\nval numbers = listOf(1, \"two\").only<Int>()"
+        },
+        {
+          "kind": "exercise",
+          "text": "What does numbers contain, and why cannot a regular generic function use is T?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-7",
+      "chapterId": "coroutines-foundations",
+      "title": "Structured concurrency",
+      "minutes": 6,
+      "order": 6,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Child coroutines belong to a scope. A parent waits for its children, and cancellation travels downward. Avoid GlobalScope for screen work; ViewModelScope ties jobs to the ViewModel lifetime."
+        },
+        {
+          "kind": "code",
+          "text": "suspend fun loadBoth() = coroutineScope {\n    val user = async { loadUser() }\n    val lessons = async { loadLessons() }\n    user.await() to lessons.await()\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "If loadUser throws, explain what happens to the sibling task."
+        }
+      ]
+    },
+    {
+      "id": "lesson-8",
+      "chapterId": "coroutines-foundations",
+      "title": "Suspension and cancellation",
+      "minutes": 7,
+      "order": 7,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Suspension pauses a coroutine without blocking its thread. Cancellation is cooperative: suspending functions check it, while CPU loops must check explicitly. Never swallow CancellationException in a broad error handler."
+        },
+        {
+          "kind": "code",
+          "text": "suspend fun scan(items: List<String>) {\n    for (item in items) {\n        currentCoroutineContext().ensureActive()\n        inspect(item)\n    }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Where would you put cleanup that must run after cancellation?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-9",
+      "chapterId": "coroutines-foundations",
+      "title": "Cold Flow and StateFlow",
+      "minutes": 4,
+      "order": 8,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "A cold flow runs its producer for each collector. StateFlow is hot, always has a current value and conflates equal updates. Convert repository streams to UI state with stateIn and a lifecycle-appropriate sharing policy."
+        },
+        {
+          "kind": "code",
+          "text": "val state = repository.observe()\n    .stateIn(viewModelScope,\n        SharingStarted.WhileSubscribed(5_000),\n        UiState())"
+        },
+        {
+          "kind": "exercise",
+          "text": "Why should a one-time navigation event not be replayed as permanent screen state?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-10",
+      "chapterId": "compose-foundations",
+      "title": "State hoisting",
+      "minutes": 5,
+      "order": 9,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Keep state at the lowest common owner that needs to read or change it. A stateless composable receives a value and an event callback. This makes previews, reuse and testing easier."
+        },
+        {
+          "kind": "code",
+          "text": "@Composable\nfun Counter(value: Int, onIncrement: () -> Unit) {\n    Button(onClick = onIncrement) { Text(\"$value\") }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Create two counters sharing one owner and explain why they update together."
+        }
+      ]
+    },
+    {
+      "id": "lesson-11",
+      "chapterId": "compose-foundations",
+      "title": "Recomposition is selective",
+      "minutes": 6,
+      "order": 10,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Compose records state reads and can restart affected scopes when state changes. Recomposition is not a full screen redraw. Keep expensive calculations remembered by correct keys, and defer rapidly changing reads to layout or draw when possible."
+        },
+        {
+          "kind": "code",
+          "text": "val sorted = remember(items) { items.sorted() }\nLazyColumn {\n    items(sorted, key = { it.id }) { ItemRow(it) }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Why can mutating items in place make this remember cache stale?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-12",
+      "chapterId": "compose-foundations",
+      "title": "Effects and lifecycle",
+      "minutes": 7,
+      "order": 11,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Composables may execute repeatedly. Side effects belong in effect APIs. LaunchedEffect cancels and restarts when its keys change and cancels when it leaves composition. DisposableEffect is useful for listener registration and cleanup."
+        },
+        {
+          "kind": "code",
+          "text": "LaunchedEffect(lessonId) {\n    viewModel.load(lessonId)\n}\nDisposableEffect(owner) {\n    owner.addListener(listener)\n    onDispose { owner.removeListener(listener) }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Predict when a network request restarts if its effect key is an unstable object."
+        }
+      ]
+    },
+    {
+      "id": "lesson-13",
+      "chapterId": "architecture-foundations",
+      "title": "Dependency direction",
+      "minutes": 4,
+      "order": 12,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Domain rules should not import Android, Room or Compose. Data implements domain repository contracts. Presentation maps domain results to UI state. This lets you test rules without an emulator and replace storage without rewriting the feature."
+        },
+        {
+          "kind": "code",
+          "text": "interface LessonRepository {\n    fun observe(): Flow<List<Lesson>>\n    suspend fun complete(id: String)\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Draw the compile-time dependencies and distinguish them from runtime data flow."
+        }
+      ]
+    },
+    {
+      "id": "lesson-14",
+      "chapterId": "architecture-foundations",
+      "title": "Unidirectional state",
+      "minutes": 5,
+      "order": 13,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "User actions enter the ViewModel, business rules run, and a new immutable state is published. The UI renders that state. Avoid a second mutable copy of the same progress in the screen because it can diverge after recreation."
+        },
+        {
+          "kind": "code",
+          "text": "fun onAction(action: Action) {\n    when (action) {\n        is Action.Complete -> viewModelScope.launch {\n            completeLesson(action.id)\n        }\n    }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Trace a double tap through a transactional completion use case."
+        }
+      ]
+    },
+    {
+      "id": "lesson-15",
+      "chapterId": "network-foundations",
+      "title": "Failure-aware networking",
+      "minutes": 6,
+      "order": 14,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Transport failures, HTTP failures and decoding failures are different. Use timeouts and a typed result, keep work off the main thread, and retry only when the operation is safe. An idempotency key can make a repeated command safe on a cooperating server."
+        },
+        {
+          "kind": "code",
+          "text": "sealed interface FetchResult {\n    data class Data(val body: String): FetchResult\n    data class HttpError(val status: Int): FetchResult\n    data class Offline(val cause: IOException): FetchResult\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Why can automatically retrying a payment POST be dangerous?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-16",
+      "chapterId": "network-foundations",
+      "title": "Constructor injection",
+      "minutes": 7,
+      "order": 15,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Explicit constructor parameters reveal dependencies and allow simple test doubles. Hilt creates and scopes the object graph. A Singleton should not retain an Activity because it outlives that Activity. Use application context for databases."
+        },
+        {
+          "kind": "code",
+          "text": "class LoadLessons @Inject constructor(\n    private val repository: LessonRepository\n) {\n    operator fun invoke() = repository.observe()\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Choose a lifetime for a database and for a screen-specific state holder."
+        }
+      ]
+    },
+    {
+      "id": "lesson-17",
+      "chapterId": "offline-foundations",
+      "title": "Room transactions",
+      "minutes": 4,
+      "order": 16,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "A transaction commits related changes together. Completing a lesson and granting XP must be atomic. A unique event key protects against duplicate requests; checking in memory before writing is not enough under concurrency."
+        },
+        {
+          "kind": "code",
+          "text": "db.withTransaction {\n    dao.complete(lessonId)\n    dao.insertReward(\n        Reward(\"lesson:$lessonId\", 20)\n    ) // unique key, ignore duplicates\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Explain the failure if the app dies between two non-transactional writes."
+        }
+      ]
+    },
+    {
+      "id": "lesson-18",
+      "chapterId": "offline-foundations",
+      "title": "WorkManager constraints",
+      "minutes": 5,
+      "order": 17,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "WorkManager is for persistent deferrable work, not exact timers. Set network and battery constraints, choose unique work to avoid duplication, and make workers idempotent because they can retry after interruptions."
+        },
+        {
+          "kind": "code",
+          "text": "val request = OneTimeWorkRequestBuilder<SyncWorker>()\n    .setConstraints(Constraints.Builder()\n        .setRequiredNetworkType(NetworkType.CONNECTED)\n        .build())\n    .build()"
+        },
+        {
+          "kind": "exercise",
+          "text": "Why is a UI animation not a WorkManager job?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-19",
+      "chapterId": "offline-foundations",
+      "title": "Offline source of truth",
+      "minutes": 6,
+      "order": 18,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Render from the database even when a server is available. Synchronization updates that database. Track pending writes with stable identifiers and a conflict policy rather than treating network success as the UI source of truth."
+        },
+        {
+          "kind": "code",
+          "text": "fun observeLessons(): Flow<List<Lesson>> =\n    dao.observeLessons()\nsuspend fun refresh() {\n    val remote = api.lessons()\n    db.withTransaction { dao.upsert(remote) }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Describe what the user sees when refresh fails but cached data exists."
+        }
+      ]
+    },
+    {
+      "id": "lesson-20",
+      "chapterId": "testing-foundations",
+      "title": "Deterministic coroutine tests",
+      "minutes": 7,
+      "order": 19,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "runTest uses a test scheduler so delay does not consume wall time. Inject dispatchers and clocks. Test observable outcomes rather than internal method counts, and ensure long-lived flows are collected in backgroundScope."
+        },
+        {
+          "kind": "code",
+          "text": "@Test fun emitsResult() = runTest {\n    val values = mutableListOf<Int>()\n    backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {\n        repository.count.collect { values += it }\n    }\n    repository.increment()\n    assertEquals(1, values.last())\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Why does hard-coding Dispatchers.IO make scheduler-based tests harder?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-21",
+      "chapterId": "testing-foundations",
+      "title": "Debugging with evidence",
+      "minutes": 4,
+      "order": 20,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Start from a reproducible symptom. Capture logs without personal data, inspect a stack trace from the first relevant application frame, and form one falsifiable hypothesis. A regression test should fail before the fix and pass after it."
+        },
+        {
+          "kind": "code",
+          "text": "check(question.options.isNotEmpty())\nrequire(question.correct in question.options.indices)\n// Validate bundled content before committing the seed."
+        },
+        {
+          "kind": "exercise",
+          "text": "Write a regression scenario for XP being granted twice after rotation."
+        }
+      ]
+    },
+    {
+      "id": "lesson-22",
+      "chapterId": "performance-foundations",
+      "title": "Measure frames and startup",
+      "minutes": 5,
+      "order": 21,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Do not optimize from intuition alone. Use profiling and repeatable benchmarks on representative devices. Heavy work on the main thread delays input and frames. Baseline profiles help compiled startup paths but do not fix inefficient algorithms."
+        },
+        {
+          "kind": "code",
+          "text": "val result = withContext(Dispatchers.Default) {\n    expensivePureCalculation(input)\n}\nstate.update { it.copy(result = result) }"
+        },
+        {
+          "kind": "exercise",
+          "text": "Separate CPU-bound work from blocking disk IO and choose dispatchers."
+        }
+      ]
+    },
+    {
+      "id": "lesson-23",
+      "chapterId": "performance-foundations",
+      "title": "Stable lists and drawing",
+      "minutes": 6,
+      "order": 22,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Use stable item keys to preserve item identity when a list changes. Cache expensive paths or brushes with drawWithCache when their inputs are unchanged. Read animation state during drawing to avoid rebuilding large composable trees every frame."
+        },
+        {
+          "kind": "code",
+          "text": "Modifier.drawWithCache {\n    val brush = Brush.linearGradient(colors)\n    onDrawBehind { drawRect(brush) }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "Which allocations should be outside an animation frame loop?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-24",
+      "chapterId": "system-foundations",
+      "title": "Design for retries",
+      "minutes": 7,
+      "order": 23,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "Mobile processes die and networks repeat requests. Stable operation IDs, durable queues and idempotent handlers are more reliable than assuming exactly one delivery. Store the operation result before acknowledging it."
+        },
+        {
+          "kind": "code",
+          "text": "suspend fun reward(operationId: String) {\n    database.withTransaction {\n        ledger.insertOrIgnore(operationId, amount = 20)\n    }\n}"
+        },
+        {
+          "kind": "exercise",
+          "text": "How would you reconcile two devices completing the same lesson offline?"
+        }
+      ]
+    },
+    {
+      "id": "lesson-25",
+      "chapterId": "system-foundations",
+      "title": "Time and calendar boundaries",
+      "minutes": 4,
+      "order": 24,
+      "blocks": [
+        {
+          "kind": "text",
+          "text": "A streak is based on calendar dates, not elapsed 24-hour intervals. Daylight-saving days can have 23 or 25 hours. Store the local date associated with an activity and inject Clock for deterministic boundary tests."
+        },
+        {
+          "kind": "code",
+          "text": "val date = LocalDate.now(clock)\nval yesterday = date.minusDays(1)\nval active = dates.contains(date) || dates.contains(yesterday)"
+        },
+        {
+          "kind": "exercise",
+          "text": "Test a session around midnight and explain how travel affects your chosen date policy."
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "pathId": "android",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "Which component survives configuration changes while its owner is retained?",
+      "options": [
+        "ViewModel",
+        "Activity instance",
+        "TextView"
+      ],
+      "correct": 0,
+      "explanation": "A ViewModel survives configuration recreation, but not process death."
+    },
+    {
+      "id": "q2",
+      "pathId": "android",
+      "kind": "true_false",
+      "difficulty": "Foundation",
+      "prompt": "True or false: onStop guarantees an Activity will never return.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "A stopped Activity can return to the foreground."
+    },
+    {
+      "id": "q3",
+      "pathId": "android",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Where should durable lesson completion live?",
+      "options": [
+        "remember",
+        "Room",
+        "A local variable"
+      ],
+      "correct": 1,
+      "explanation": "Room survives process death and app restarts."
+    },
+    {
+      "id": "q4",
+      "pathId": "android",
+      "kind": "bug",
+      "difficulty": "Intermediate",
+      "prompt": "Identify the bug: an Activity is stored in a Singleton.",
+      "options": [
+        "It can leak the Activity",
+        "It cannot compile",
+        "It makes rotation faster"
+      ],
+      "correct": 0,
+      "explanation": "The Singleton can outlive the Activity and retain its views."
+    },
+    {
+      "id": "q5",
+      "pathId": "kotlin",
+      "kind": "output",
+      "difficulty": "Foundation",
+      "prompt": "What is printed? val x: String? = null; println(x?.length ?: 7)",
+      "options": [
+        "null",
+        "0",
+        "7"
+      ],
+      "correct": 2,
+      "explanation": "The safe call returns null; Elvis selects 7."
+    },
+    {
+      "id": "q6",
+      "pathId": "kotlin",
+      "kind": "output",
+      "difficulty": "Foundation",
+      "prompt": "What is printed? println(listOf(1,2,3).map { it * 2 }.last())",
+      "options": [
+        "3",
+        "6",
+        "2"
+      ],
+      "correct": 1,
+      "explanation": "Mapping doubles each value; the last is 6."
+    },
+    {
+      "id": "q7",
+      "pathId": "kotlin",
+      "kind": "true_false",
+      "difficulty": "Intermediate",
+      "prompt": "True or false: val makes every referenced object immutable.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "val prevents reassignment, not mutation of an object."
+    },
+    {
+      "id": "q8",
+      "pathId": "kotlin",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Which declaration supports exhaustive outcome matching?",
+      "options": [
+        "sealed interface",
+        "open class Any",
+        "MutableList"
+      ],
+      "correct": 0,
+      "explanation": "A sealed hierarchy restricts known direct subclasses."
+    },
+    {
+      "id": "q9",
+      "pathId": "kotlin",
+      "kind": "output",
+      "difficulty": "Foundation",
+      "prompt": "What is printed? println(listOf(1,2,3).filter { it > 1 }.size)",
+      "options": [
+        "1",
+        "2",
+        "3"
+      ],
+      "correct": 1,
+      "explanation": "Two items, 2 and 3, pass the filter."
+    },
+    {
+      "id": "q10",
+      "pathId": "kotlin",
+      "kind": "bug",
+      "difficulty": "Intermediate",
+      "prompt": "Identify the bug: external nullable input is read with !!.",
+      "options": [
+        "Potential null crash",
+        "Always returns zero",
+        "Creates a coroutine"
+      ],
+      "correct": 0,
+      "explanation": "The assertion throws if the input is null."
+    },
+    {
+      "id": "q11",
+      "pathId": "coroutines",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Does delay block its thread?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correct": 1,
+      "explanation": "delay suspends the coroutine and frees the thread."
+    },
+    {
+      "id": "q12",
+      "pathId": "coroutines",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "When a parent Job is cancelled, its children normally…",
+      "options": [
+        "Keep running forever",
+        "Receive cancellation",
+        "Move to GlobalScope"
+      ],
+      "correct": 1,
+      "explanation": "Structured concurrency propagates cancellation downward."
+    },
+    {
+      "id": "q13",
+      "pathId": "coroutines",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "Which call helps a CPU loop cooperate with cancellation?",
+      "options": [
+        "ensureActive()",
+        "Thread.sleep(0)",
+        "println()"
+      ],
+      "correct": 0,
+      "explanation": "ensureActive checks the coroutine context Job."
+    },
+    {
+      "id": "q14",
+      "pathId": "coroutines",
+      "kind": "true_false",
+      "difficulty": "Foundation",
+      "prompt": "True or false: a cold flow normally runs separately for each collector.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 0,
+      "explanation": "Each collection executes the cold flow builder."
+    },
+    {
+      "id": "q15",
+      "pathId": "coroutines",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "What is a StateFlow requirement?",
+      "options": [
+        "A current value",
+        "A network connection",
+        "A database"
+      ],
+      "correct": 0,
+      "explanation": "StateFlow always has a current value and conflates equal updates."
+    },
+    {
+      "id": "q16",
+      "pathId": "coroutines",
+      "kind": "bug",
+      "difficulty": "Intermediate",
+      "prompt": "Identify the bug: catch (e: Exception) { } wraps suspending work.",
+      "options": [
+        "It may swallow cancellation",
+        "It is always safe",
+        "It creates two Jobs"
+      ],
+      "correct": 0,
+      "explanation": "CancellationException must usually be rethrown."
+    },
+    {
+      "id": "q17",
+      "pathId": "compose",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "What should a stateless composable receive?",
+      "options": [
+        "Value and action callbacks",
+        "A Room DAO",
+        "An Activity singleton"
+      ],
+      "correct": 0,
+      "explanation": "Hoisting exposes values and events to the owner."
+    },
+    {
+      "id": "q18",
+      "pathId": "compose",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Which API is for a coroutine tied to composition?",
+      "options": [
+        "LaunchedEffect",
+        "GlobalScope.launch",
+        "Thread.start"
+      ],
+      "correct": 0,
+      "explanation": "LaunchedEffect cancels when it leaves composition."
+    },
+    {
+      "id": "q19",
+      "pathId": "compose",
+      "kind": "true_false",
+      "difficulty": "Intermediate",
+      "prompt": "True or false: every recomposition redraws the entire app.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "Compose can restart affected scopes and skip work."
+    },
+    {
+      "id": "q20",
+      "pathId": "compose",
+      "kind": "bug",
+      "difficulty": "Foundation",
+      "prompt": "Identify the bug: remember(items) caches sorting while items is mutated in place.",
+      "options": [
+        "The cache may be stale",
+        "Sorting becomes parallel",
+        "The list is always empty"
+      ],
+      "correct": 0,
+      "explanation": "The key may not change, so cached work is reused."
+    },
+    {
+      "id": "q21",
+      "pathId": "compose",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Why provide keys in a changing LazyColumn?",
+      "options": [
+        "Preserve item identity",
+        "Encrypt data",
+        "Disable scrolling"
+      ],
+      "correct": 0,
+      "explanation": "Keys help Compose track state through insertions and moves."
+    },
+    {
+      "id": "q22",
+      "pathId": "compose",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "Which state survives Activity recreation through saved instance state?",
+      "options": [
+        "rememberSaveable-compatible data",
+        "A plain local variable",
+        "A Canvas Path"
+      ],
+      "correct": 0,
+      "explanation": "rememberSaveable restores supported small values, subject to saved-state limits."
+    },
+    {
+      "id": "q23",
+      "pathId": "architecture",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Which module defines a repository contract?",
+      "options": [
+        "Domain",
+        "Room-generated code",
+        "Drawable resources"
+      ],
+      "correct": 0,
+      "explanation": "Domain defines the abstraction required by business rules."
+    },
+    {
+      "id": "q24",
+      "pathId": "architecture",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Which direction should Data depend on?",
+      "options": [
+        "Domain contracts",
+        "Activity implementation",
+        "Compose screen internals"
+      ],
+      "correct": 0,
+      "explanation": "Data implements inward-facing domain contracts."
+    },
+    {
+      "id": "q25",
+      "pathId": "architecture",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "What does unidirectional flow mean?",
+      "options": [
+        "Actions in, state out",
+        "Two mutable sources of truth",
+        "Only one screen"
+      ],
+      "correct": 0,
+      "explanation": "The UI emits actions and renders state from its owner."
+    },
+    {
+      "id": "q26",
+      "pathId": "architecture",
+      "kind": "true_false",
+      "difficulty": "Foundation",
+      "prompt": "True or false: pure domain tests require an emulator.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "Pure Kotlin domain tests can run on the JVM."
+    },
+    {
+      "id": "q27",
+      "pathId": "network",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Which operation is unsafe to retry without an agreed idempotency strategy?",
+      "options": [
+        "A payment creation POST",
+        "Reading a cached string",
+        "A pure sum function"
+      ],
+      "correct": 0,
+      "explanation": "Repeated payment creation can create multiple charges."
+    },
+    {
+      "id": "q28",
+      "pathId": "network",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "Which context should a long-lived Room database use?",
+      "options": [
+        "Application context",
+        "Destroyed Activity",
+        "Dialog context"
+      ],
+      "correct": 0,
+      "explanation": "Application context avoids retaining short-lived UI owners."
+    },
+    {
+      "id": "q29",
+      "pathId": "network",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "What does constructor injection improve?",
+      "options": [
+        "Dependency visibility and testability",
+        "Network bandwidth",
+        "Screen resolution"
+      ],
+      "correct": 0,
+      "explanation": "Dependencies become explicit and replaceable."
+    },
+    {
+      "id": "q30",
+      "pathId": "network",
+      "kind": "true_false",
+      "difficulty": "Foundation",
+      "prompt": "True or false: HTTP 500 and JSON decoding failure are identical.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "Transport, server and decoding failures need different handling."
+    },
+    {
+      "id": "q31",
+      "pathId": "offline",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "What keeps completion and XP consistent?",
+      "options": [
+        "One database transaction",
+        "Two unrelated launches",
+        "A UI boolean"
+      ],
+      "correct": 0,
+      "explanation": "A transaction commits related changes atomically."
+    },
+    {
+      "id": "q32",
+      "pathId": "offline",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "What prevents duplicate reward writes under concurrency?",
+      "options": [
+        "Unique event key",
+        "Disabling a button only",
+        "A toast"
+      ],
+      "correct": 0,
+      "explanation": "The database constraint handles all callers and restarts."
+    },
+    {
+      "id": "q33",
+      "pathId": "offline",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Is WorkManager appropriate for an exact 60 FPS animation?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correct": 1,
+      "explanation": "WorkManager schedules deferrable persistent work."
+    },
+    {
+      "id": "q34",
+      "pathId": "offline",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "What should an offline-first UI observe?",
+      "options": [
+        "Local database",
+        "Only the most recent HTTP response",
+        "A loading spinner forever"
+      ],
+      "correct": 0,
+      "explanation": "The local database is the durable source of truth."
+    },
+    {
+      "id": "q35",
+      "pathId": "testing",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Which coroutine test utility provides virtual time?",
+      "options": [
+        "runTest",
+        "Thread.sleep",
+        "System.currentTimeMillis"
+      ],
+      "correct": 0,
+      "explanation": "runTest coordinates a test scheduler."
+    },
+    {
+      "id": "q36",
+      "pathId": "testing",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Why inject Clock?",
+      "options": [
+        "Deterministic date-boundary tests",
+        "Increase XP",
+        "Avoid all timezones"
+      ],
+      "correct": 0,
+      "explanation": "Tests can fix instants and choose a zone explicitly."
+    },
+    {
+      "id": "q37",
+      "pathId": "testing",
+      "kind": "single",
+      "difficulty": "Intermediate",
+      "prompt": "What makes a useful regression test?",
+      "options": [
+        "Fails before the fix and passes after",
+        "Always asserts true",
+        "Copies the implementation"
+      ],
+      "correct": 0,
+      "explanation": "It must detect the original behavior defect."
+    },
+    {
+      "id": "q38",
+      "pathId": "performance",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "Where should CPU-intensive pure work normally run?",
+      "options": [
+        "Dispatchers.Default",
+        "Main thread draw callback",
+        "A text field callback"
+      ],
+      "correct": 0,
+      "explanation": "Default is intended for CPU-bound background work."
+    },
+    {
+      "id": "q39",
+      "pathId": "performance",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "What should precede performance optimization?",
+      "options": [
+        "Measurement",
+        "Random caching",
+        "Disabling tests"
+      ],
+      "correct": 0,
+      "explanation": "Profiles and benchmarks identify actual bottlenecks."
+    },
+    {
+      "id": "q40",
+      "pathId": "performance",
+      "kind": "bug",
+      "difficulty": "Intermediate",
+      "prompt": "Identify the bug: a bitmap is allocated in every animation frame.",
+      "options": [
+        "Allocation and GC pressure",
+        "Automatic GPU caching",
+        "No possible cost"
+      ],
+      "correct": 0,
+      "explanation": "Reuse assets to avoid memory churn and dropped frames."
+    },
+    {
+      "id": "q41",
+      "pathId": "system",
+      "kind": "single",
+      "difficulty": "Foundation",
+      "prompt": "How should a daily streak compare days?",
+      "options": [
+        "LocalDate calendar arithmetic",
+        "Always subtract 86400000 ms",
+        "Compare only hour of day"
+      ],
+      "correct": 0,
+      "explanation": "Calendar arithmetic handles 23- and 25-hour DST days."
+    },
+    {
+      "id": "q42",
+      "pathId": "system",
+      "kind": "true_false",
+      "difficulty": "Foundation",
+      "prompt": "True or false: retries imply exactly one delivery.",
+      "options": [
+        "True",
+        "False"
+      ],
+      "correct": 1,
+      "explanation": "Delivery may repeat. Idempotent handlers make repetition safe."
+    }
+  ],
+  "challenges": [
+    {
+      "id": "dedup",
+      "title": "Preserve the first occurrence",
+      "difficulty": "Foundation",
+      "description": "Write a function that removes duplicate integers while preserving encounter order.",
+      "constraints": "Input may be empty; negative values are valid. Aim for O(n) expected time.",
+      "example": "[3, 1, 3, 2, 1] → [3, 1, 2]",
+      "hints": [
+        "Track seen values in a set.",
+        "LinkedHashSet preserves insertion order."
+      ],
+      "solution": "fun unique(values: List<Int>): List<Int> = values.distinct()"
+    },
+    {
+      "id": "frequency",
+      "title": "Count word frequencies",
+      "difficulty": "Intermediate",
+      "description": "Count case-insensitive words separated by whitespace. Ignore blank input.",
+      "constraints": "Return lowercase keys. Punctuation remains part of each word.",
+      "example": "\"Kotlin kotlin Flow\" → {kotlin=2, flow=1}",
+      "hints": [
+        "Trim and check for blank input.",
+        "groupingBy and eachCount compose well."
+      ],
+      "solution": "fun frequencies(text: String): Map<String, Int> =\n    if (text.isBlank()) emptyMap() else\n    text.trim().lowercase().split(Regex(\"\\\\s+\"))\n        .groupingBy { it }.eachCount()"
+    },
+    {
+      "id": "streak",
+      "title": "Consecutive active dates",
+      "difficulty": "Intermediate",
+      "description": "Return the current streak ending today, or yesterday if today is inactive.",
+      "constraints": "Use LocalDate. Dates may be unordered and repeated.",
+      "example": "Today=2026-10-29; {27,28} October → 2",
+      "hints": [
+        "Convert to a set.",
+        "Walk backward with minusDays(1)."
+      ],
+      "solution": "fun streak(days: Set<LocalDate>, today: LocalDate): Int {\n    var d = if (today in days) today else today.minusDays(1)\n    var count = 0\n    while (d in days) { count++; d = d.minusDays(1) }\n    return count\n}"
+    }
+  ],
+  "achievements": [
+    {
+      "id": "spark",
+      "title": "First spark",
+      "description": "Earn your first 20 XP.",
+      "xpRequired": 20
+    },
+    {
+      "id": "builder",
+      "title": "Builder",
+      "description": "Earn 100 XP through practice.",
+      "xpRequired": 100
+    },
+    {
+      "id": "architect",
+      "title": "Architect",
+      "description": "Earn 400 XP.",
+      "xpRequired": 400
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.devquest.app.FlowTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-29T09:28:46.175Z" hostname="RACs-MacBook-Pro.local" time="3.946">
+  <properties/>
+  <testcase name="onboardingReachesGoalSelection" classname="com.devquest.app.FlowTest" time="3.505"/>
+  <testcase name="homeNavigatesToActualLesson" classname="com.devquest.app.FlowTest" time="0.341"/>
+  <testcase name="quizHidesAnswerThenShowsFeedback" classname="com.devquest.app.FlowTest" time="0.1"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

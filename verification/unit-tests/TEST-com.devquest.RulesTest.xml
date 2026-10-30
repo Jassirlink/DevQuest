@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.devquest.RulesTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-29T09:25:20.478Z" hostname="RACs-MacBook-Pro.local" time="0.013">
+  <properties/>
+  <testcase name="rejectsInvalidChoice" classname="com.devquest.RulesTest" time="0.011"/>
+  <testcase name="zeroProgressAndBounds" classname="com.devquest.RulesTest" time="0.001"/>
+  <testcase name="retryContainsOnlyMissed" classname="com.devquest.RulesTest" time="0.0"/>
+  <testcase name="gradesWithoutRevealingUntilSubmission" classname="com.devquest.RulesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

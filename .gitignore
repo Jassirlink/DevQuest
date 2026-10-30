@@ -1,0 +1,60 @@
+
+# ========================================
+# DevQuest - Android Git Ignore
+# ========================================
+
+# Gradle cache and build outputs
+.gradle/
+**/build/
+.kotlin/
+.gradle-tasknamecache
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Local Android SDK configuration
+local.properties
+**/local.properties
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Android generated files
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
+
+# Java / Kotlin generated files
+*.class
+*.hprof
+
+# Log files
+*.log
+
+# Signing keys - Never upload
+*.jks
+*.keystore
+*.p12
+*.p8
+*.pem
+keystore.properties
+
+# Sensitive environment files
+.env
+.env.*
+!.env.example
+secrets.properties
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~

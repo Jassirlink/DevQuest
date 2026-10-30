@@ -1,0 +1,20 @@
+pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }
+rootProject.name = "DevQuest"
+include(":app")
+include(":core:designsystem")
+include(":core:motion")
+include(":core:model")
+include(":core:database")
+include(":core:datastore")
+include(":core:common")
+include(":domain")
+include(":data")
+include(":feature:onboarding")
+include(":feature:home")
+include(":feature:learn")
+include(":feature:lesson")
+include(":feature:forge")
+include(":feature:practice")
+include(":feature:progress")
+include(":feature:profile")
